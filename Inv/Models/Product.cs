@@ -7,11 +7,14 @@ namespace Inv.Models
 {
     public class Product
     {
-        public int ID { get; set; }
-        public string LastName { get; set; }
-        public string FirstMidName { get; set; }
-        public DateTime EnrollmentDate { get; set; }
-
+        public int ProductID { get; set; }
+        public int CategoryID { get; set; }
+        public string ProductName { get; set; }
+        public string QuantityPerUnit { get; set; }
+        public int Stocks { get; set; }
+        public int Price { get; set; }
+        public bool Available { get; set; }
+            
         public virtual Category Category{ get; set; }
     }
 }
