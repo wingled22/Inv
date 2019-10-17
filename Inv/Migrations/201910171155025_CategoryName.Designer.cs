@@ -7,13 +7,13 @@ namespace Inv.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ProductDecimalPrice1 : IMigrationMetadata
+    public sealed partial class CategoryName : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ProductDecimalPrice1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CategoryName));
         
         string IMigrationMetadata.Id
         {
-            get { return "201910170743187_ProductDecimalPrice1"; }
+            get { return "201910171155025_CategoryName"; }
         }
         
         string IMigrationMetadata.Source

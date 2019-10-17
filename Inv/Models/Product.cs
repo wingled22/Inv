@@ -9,8 +9,7 @@ namespace Inv.Models
     public class Product
     {
         public int ProductID { get; set; }
-        [Required]
-        [Display(Name ="Category")]
+        
         public int CategoryID { get; set; }
 
         [Required]
@@ -29,7 +28,8 @@ namespace Inv.Models
 
         [Required]
         public bool Available { get; set; }
-            
+        [Required]
+        [Display(Name = "Category")]
         public virtual Category Category{ get; set; }
     }
 }

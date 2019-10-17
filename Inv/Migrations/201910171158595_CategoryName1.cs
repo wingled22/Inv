@@ -3,7 +3,7 @@ namespace Inv.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ProductDecimalPrice2 : DbMigration
+    public partial class CategoryName1 : DbMigration
     {
         public override void Up()
         {

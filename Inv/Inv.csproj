@@ -126,6 +126,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\POS\Controllers\PosController.cs" />
+    <Compile Include="Areas\POS\POSAreaRegistration.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -133,29 +135,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910170735199_Initial.cs" />
-    <Compile Include="Migrations\201910170735199_Initial.Designer.cs">
-      <DependentUpon>201910170735199_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201910171153463_ProductCategoryName.cs" />
+    <Compile Include="Migrations\201910171153463_ProductCategoryName.Designer.cs">
+      <DependentUpon>201910171153463_ProductCategoryName.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910170739412_ProductDataAnnotation.cs" />
-    <Compile Include="Migrations\201910170739412_ProductDataAnnotation.Designer.cs">
-      <DependentUpon>201910170739412_ProductDataAnnotation.cs</DependentUpon>
+    <Compile Include="Migrations\201910171155025_CategoryName.cs" />
+    <Compile Include="Migrations\201910171155025_CategoryName.Designer.cs">
+      <DependentUpon>201910171155025_CategoryName.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910170741538_ProductDecimalPrice.cs" />
-    <Compile Include="Migrations\201910170741538_ProductDecimalPrice.Designer.cs">
-      <DependentUpon>201910170741538_ProductDecimalPrice.cs</DependentUpon>
+    <Compile Include="Migrations\201910171158595_CategoryName1.cs" />
+    <Compile Include="Migrations\201910171158595_CategoryName1.Designer.cs">
+      <DependentUpon>201910171158595_CategoryName1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910170743187_ProductDecimalPrice1.cs" />
-    <Compile Include="Migrations\201910170743187_ProductDecimalPrice1.Designer.cs">
-      <DependentUpon>201910170743187_ProductDecimalPrice1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910170743431_ProductDecimalPrice2.cs" />
-    <Compile Include="Migrations\201910170743431_ProductDecimalPrice2.Designer.cs">
-      <DependentUpon>201910170743431_ProductDecimalPrice2.cs</DependentUpon>
+    <Compile Include="Migrations\201910171200335_TransactionInit.cs" />
+    <Compile Include="Migrations\201910171200335_TransactionInit.Designer.cs">
+      <DependentUpon>201910171200335_TransactionInit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +169,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\POS\Views\web.config" />
+    <Content Include="Areas\POS\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\POS\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\POS\Views\Pos\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -207,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\POS\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -222,20 +227,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910170735199_Initial.resx">
-      <DependentUpon>201910170735199_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910171153463_ProductCategoryName.resx">
+      <DependentUpon>201910171153463_ProductCategoryName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910170739412_ProductDataAnnotation.resx">
-      <DependentUpon>201910170739412_ProductDataAnnotation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910171155025_CategoryName.resx">
+      <DependentUpon>201910171155025_CategoryName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910170741538_ProductDecimalPrice.resx">
-      <DependentUpon>201910170741538_ProductDecimalPrice.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910171158595_CategoryName1.resx">
+      <DependentUpon>201910171158595_CategoryName1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910170743187_ProductDecimalPrice1.resx">
-      <DependentUpon>201910170743187_ProductDecimalPrice1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910170743431_ProductDecimalPrice2.resx">
-      <DependentUpon>201910170743431_ProductDecimalPrice2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910171200335_TransactionInit.resx">
+      <DependentUpon>201910171200335_TransactionInit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
