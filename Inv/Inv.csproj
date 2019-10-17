@@ -137,6 +137,22 @@
     <Compile Include="Migrations\201910170735199_Initial.Designer.cs">
       <DependentUpon>201910170735199_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910170739412_ProductDataAnnotation.cs" />
+    <Compile Include="Migrations\201910170739412_ProductDataAnnotation.Designer.cs">
+      <DependentUpon>201910170739412_ProductDataAnnotation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910170741538_ProductDecimalPrice.cs" />
+    <Compile Include="Migrations\201910170741538_ProductDecimalPrice.Designer.cs">
+      <DependentUpon>201910170741538_ProductDecimalPrice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910170743187_ProductDecimalPrice1.cs" />
+    <Compile Include="Migrations\201910170743187_ProductDecimalPrice1.Designer.cs">
+      <DependentUpon>201910170743187_ProductDecimalPrice1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910170743431_ProductDecimalPrice2.cs" />
+    <Compile Include="Migrations\201910170743431_ProductDecimalPrice2.Designer.cs">
+      <DependentUpon>201910170743431_ProductDecimalPrice2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Product.cs" />
@@ -208,6 +224,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201910170735199_Initial.resx">
       <DependentUpon>201910170735199_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910170739412_ProductDataAnnotation.resx">
+      <DependentUpon>201910170739412_ProductDataAnnotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910170741538_ProductDecimalPrice.resx">
+      <DependentUpon>201910170741538_ProductDecimalPrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910170743187_ProductDecimalPrice1.resx">
+      <DependentUpon>201910170743187_ProductDecimalPrice1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910170743431_ProductDecimalPrice2.resx">
+      <DependentUpon>201910170743431_ProductDecimalPrice2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
