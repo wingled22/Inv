@@ -52,6 +52,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -135,23 +141,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910171153463_ProductCategoryName.cs" />
-    <Compile Include="Migrations\201910171153463_ProductCategoryName.Designer.cs">
-      <DependentUpon>201910171153463_ProductCategoryName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910171155025_CategoryName.cs" />
-    <Compile Include="Migrations\201910171155025_CategoryName.Designer.cs">
-      <DependentUpon>201910171155025_CategoryName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910171158595_CategoryName1.cs" />
-    <Compile Include="Migrations\201910171158595_CategoryName1.Designer.cs">
-      <DependentUpon>201910171158595_CategoryName1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910171200335_TransactionInit.cs" />
-    <Compile Include="Migrations\201910171200335_TransactionInit.Designer.cs">
-      <DependentUpon>201910171200335_TransactionInit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
@@ -163,6 +152,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -225,20 +215,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910171153463_ProductCategoryName.resx">
-      <DependentUpon>201910171153463_ProductCategoryName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910171155025_CategoryName.resx">
-      <DependentUpon>201910171155025_CategoryName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910171158595_CategoryName1.resx">
-      <DependentUpon>201910171158595_CategoryName1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910171200335_TransactionInit.resx">
-      <DependentUpon>201910171200335_TransactionInit.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
