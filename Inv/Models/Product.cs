@@ -23,13 +23,11 @@ namespace Inv.Models
         [Required]
         public int Stocks { get; set; }
 
-        //[Required]
         public decimal Price { get; set; }
 
         [Required]
         public bool Available { get; set; }
-        [Required]
-        [Display(Name = "Category")]
+
         public virtual Category Category{ get; set; }
     }
 }

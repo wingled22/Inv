@@ -14,5 +14,6 @@ namespace Inv.Models
         public DateTime DateCreated { get; set; }
 
         public virtual Transaction Transaction { get; set; }
+        public virtual Product Product{ get; set; }
     }
 }
