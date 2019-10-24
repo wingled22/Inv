@@ -1,7 +1,108 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "POS Register";
 }
+<script id='cartItem' type='text/template'>
+    <li>
+        <p id="id" style="display:none;"></p>
+        <div class="item-wrap">
+            <div class="quantity-wrap">
+                <input type="number" name="Quantity" min="0" value="" />
+            </div>
+            <div class="info-wrap">
+                <p class="item-name">Item 1</p>
+                <div><p class="item-qpu">quantity per unit sdfsdfsdf</p></div>
+                <p class="item-price">Price: 12.55</p>
+            </div>
+            <div class="info-total">
+                <div>
+                    <p><i>Total:</i></p>
+                    <h3 class="item-total">202</h3>
+                </div>
+            </div>
+            <div class="remove-item">
+                <a class="remove">&times</a>
+            </div>
+        </div>
+    </li>
+</script>
 
-<h2>Index</h2>
+<div class="sidebar">
+    <div>
+        <h3>Orders</h3>
+        <hr />
+    </div>
+    <ul class='cart-items' id="cart-items">
+        
+    </ul>
+</div>
 
+<div class="content">
+    <div class="col-sm-4" style="background-color:yellow;">
+        <p>Lorem ipsum...</p>
+    </div>
+    <div class="col-sm-8" style="background-color:pink;">
+        <p>Sed ut perspiciatis...</p>
+    </div>
+</div>
+
+
+<script>
+    var carted_prods = [
+        {
+            itemID: 23332,
+            itemName: "Coffee1",
+            itemQPU: "130 ml",
+            itemPrice: 23.50,
+            itemQuantity: 10
+        },
+        {
+            itemID: 13221,
+            itemName: "Milk",
+            itemQPU: "100 ml",
+            itemPrice: 20,
+            itemQuantity: 19
+        },
+        {
+            itemID: 13221,
+            itemName: "Milk2",
+            itemQPU: "100 ml",
+            itemPrice: 20,
+            itemQuantity: 54
+        }
+    ];
+
+    $(document).ready(function () {
+        var cart = $('.cart-items');
+
+        function calculateSubTotal(quantity, price) {
+            return price * quantity;
+        }
+
+        $("remove-item").delegate('a.remove', 'click', function () {
+            console.log("I was clicked");
+        });
+
+        //function removeItem() {
+        //    console.log("I was clicked");
+        //}
+
+        function pops() {
+            //cart.empty();
+            carted_prods.forEach(function (element, index) {
+                var $template = $($('#cartItem').text());
+                $template.find('input').val(element.itemQuantity);
+                $template.find('.item-name').text(element.itemName);
+                $template.find('.item-qpu').text(element.itemQPU);
+                $template.find('.item-price').text(element.itemPrice);
+                $template.find('.item-total').text(calculateSubTotal(element.itemQuantity, element.itemPrice));
+                $template.find("#id").text(element.itemID);
+                $("#cart-items").prepend($template);
+                console.log($template);
+            });
+
+        }
+
+        pops();
+    });
+
+</script>
