@@ -46,7 +46,7 @@
     margin-top: 30px;
     margin-left: 350px;
     padding: 1px 16px;
-    height: 1000px;
+    height: calc(100vh - 61px);
     }
 
 .sidebar ul {

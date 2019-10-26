@@ -3,7 +3,7 @@
 }
 <script id='cartItem' type='text/template'>
     <li>
-        <p id="id" style="display:none;"></p>
+        <p id="item_id" style="display:none;"></p>
         <div class="item-wrap">
             <div class="quantity-wrap">
                 <input type="number" name="Quantity" min="0" value="" />
@@ -37,11 +37,8 @@
 </div>
 
 <div class="content">
-    <div class="col-sm-4" style="background-color:yellow;">
-        <p>Lorem ipsum...</p>
-    </div>
-    <div class="col-sm-8" style="background-color:pink;">
-        <p>Sed ut perspiciatis...</p>
+    <div class="col-sm-12" style="">
+        @Html.Action("ProductsGridView")
     </div>
 </div>
 
@@ -56,7 +53,7 @@
             itemQuantity: 10
         },
         {
-            itemID: 13221,
+            itemID: 1321,
             itemName: "Milk",
             itemQPU: "100 ml",
             itemPrice: 20,
@@ -78,18 +75,26 @@
             return price * quantity;
         }
 
-        $("remove-item").delegate('a.remove', 'click', function () {
-            console.log("I was clicked");
-        });
+        $(document).delegate('a.remove', 'click', function () {
+            let item_id = $(this).closest('li').find('#item_id').text();
+            console.log(item_id);
 
-        //function removeItem() {
-        //    console.log("I was clicked");
-        //}
+            carted_prods.forEach(function (element, index) {
+                if (parseInt(item_id) == element.itemID) {
+                    console.log(index);
+                    carted_prods.splice(index,1);
+                    console.log(carted_prods);
+                }
+            });
+            console.log(carted_prods);
+            pops();
+        }); 
 
         function pops() {
-            //cart.empty();
+            cart.empty();
             carted_prods.forEach(function (element, index) {
                 var $template = $($('#cartItem').text());
+                $template.find('p#item_id').text(element.itemID);
                 $template.find('input').val(element.itemQuantity);
                 $template.find('.item-name').text(element.itemName);
                 $template.find('.item-qpu').text(element.itemQPU);
@@ -97,7 +102,6 @@
                 $template.find('.item-total').text(calculateSubTotal(element.itemQuantity, element.itemPrice));
                 $template.find("#id").text(element.itemID);
                 $("#cart-items").prepend($template);
-                console.log($template);
             });
 
         }
