@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<Inv.Models.Product>
 
-@using (Html.BeginForm("ProductsGridView", "Pos", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
-}
 <table class="table">
     <tr>
+        <th style="display:none;">
+            @Html.DisplayNameFor(model => model.ProductID)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
@@ -26,21 +22,24 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+
+        <td class="prodid" style="display:none;">
+            @Html.DisplayFor(modelItem => item.ProductID)
+        </td>
+        <td class="prodname">
             @Html.DisplayFor(modelItem => item.ProductName)
         </td>
-        <td>
+        <td class="prodqpu">
             @Html.DisplayFor(modelItem => item.QuantityPerUnit)
         </td>
-        <td>
+        <td class="prodstocks">
             @Html.DisplayFor(modelItem => item.Stocks)
         </td>
-        <td>
+        <td class="prodprice">
             @Html.DisplayFor(modelItem => item.Price)
         </td>
-       
         <td>
-            <button type="button" class="btn btn-info">Add Item to cart</button>
+            <button type="button" id="add-to-cart" class="btn btn-info">Add Item to cart</button>
         </td>
     </tr>
 }

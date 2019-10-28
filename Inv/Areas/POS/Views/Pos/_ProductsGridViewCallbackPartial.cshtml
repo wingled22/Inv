@@ -1,7 +1,7 @@
 ﻿@Html.DevExpress().CallbackPanel(
     settings =>
     {
-        settings.Name = "cbProductsGridView";
+        settings.Name = "cbProductsGridViewPartial";
         settings.CallbackRouteValues = new { Area = "POS", Controller = "Pos", Action = "ProductsGridViewCallback"};
         settings.SetContent(() =>
         {

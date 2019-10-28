@@ -185,8 +185,8 @@
     <Content Include="Areas\POS\Views\_ViewStart.cshtml" />
     <Content Include="Areas\POS\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\POS\Views\Pos\Index.cshtml" />
-    <Content Include="Areas\POS\Views\Pos\_ProductsGridView.cshtml" />
-    <Content Include="Areas\POS\Views\Pos\ProductsGridViewCallback.cshtml" />
+    <Content Include="Areas\POS\Views\Pos\_ProductsGridViewPartial.cshtml" />
+    <Content Include="Areas\POS\Views\Pos\_ProductsGridViewCallbackPartial.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\inputspinner.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -225,6 +225,7 @@
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Home\_popupPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

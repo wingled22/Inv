@@ -135,3 +135,7 @@ div.quantity-wrap input {
     text-decoration: none;
     color:maroon;
 }
+
+input.togglehidden {
+    display: none;
+}

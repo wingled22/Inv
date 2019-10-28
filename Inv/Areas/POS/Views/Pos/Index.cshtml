@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Inv.Models.Product>
+@{
     ViewBag.Title = "POS Register";
 }
 <script id='cartItem' type='text/template'>
@@ -31,82 +32,124 @@
         <h3>Orders</h3>
         <hr />
     </div>
-    <ul class='cart-items' id="cart-items">
-        
-    </ul>
+    <ul class='cart-items' id="cart-items"></ul>
 </div>
 
 <div class="content">
     <div class="col-sm-12" style="">
-        @Html.Action("ProductsGridView")
+
+        <p>
+            Search Product: <input type="text" name="prodnametosearch" value="" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <input class="btn btn-primary togglehidden" name="exitsearch" type="submit" value="Exit Search" />
+        </p>
+
+
+        @Html.Partial("_ProductsGridViewCallbackPartial")
     </div>
 </div>
-
 
 <script>
     var carted_prods = [
         {
-            itemID: 23332,
-            itemName: "Coffee1",
-            itemQPU: "130 ml",
-            itemPrice: 23.50,
-            itemQuantity: 10
-        },
-        {
-            itemID: 1321,
-            itemName: "Milk",
-            itemQPU: "100 ml",
-            itemPrice: 20,
-            itemQuantity: 19
-        },
-        {
-            itemID: 13221,
-            itemName: "Milk2",
-            itemQPU: "100 ml",
-            itemPrice: 20,
-            itemQuantity: 54
+            itemID: null,
+            itemName: null ,
+            itemQPU: null,
+            itemPrice: null,
+            itemQuantity: null
         }
     ];
 
     $(document).ready(function () {
         var cart = $('.cart-items');
-
+        //calculate the item per total quantity * price
         function calculateSubTotal(quantity, price) {
             return price * quantity;
         }
 
+        //remove an item to the cart
         $(document).delegate('a.remove', 'click', function () {
             let item_id = $(this).closest('li').find('#item_id').text();
-            console.log(item_id);
-
+            //remove the removed item from the carted_prods json
             carted_prods.forEach(function (element, index) {
                 if (parseInt(item_id) == element.itemID) {
-                    console.log(index);
-                    carted_prods.splice(index,1);
-                    console.log(carted_prods);
+                    carted_prods.splice(index, 1);
                 }
             });
-            console.log(carted_prods);
             pops();
-        }); 
+        });
 
+        //populate the cart with items from the cart_prods JSON
         function pops() {
+            console.log(carted_prods);
             cart.empty();
             carted_prods.forEach(function (element, index) {
-                var $template = $($('#cartItem').text());
-                $template.find('p#item_id').text(element.itemID);
-                $template.find('input').val(element.itemQuantity);
-                $template.find('.item-name').text(element.itemName);
-                $template.find('.item-qpu').text(element.itemQPU);
-                $template.find('.item-price').text(element.itemPrice);
-                $template.find('.item-total').text(calculateSubTotal(element.itemQuantity, element.itemPrice));
-                $template.find("#id").text(element.itemID);
-                $("#cart-items").prepend($template);
+                if (element.itemID != null) {
+                    var $template = $($('#cartItem').text());
+                    $template.find('p#item_id').text(element.itemID);
+                    $template.find('input').val(element.itemQuantity);
+                    $template.find('.item-name').text(element.itemName);
+                    $template.find('.item-qpu').text(element.itemQPU);
+                    $template.find('.item-price').text(element.itemPrice);
+                    $template.find('.item-total').text(calculateSubTotal(element.itemQuantity, element.itemPrice));
+                    $template.find("#id").text(element.itemID);
+                    $("#cart-items").prepend($template);
+                }
             });
+        }
+
+        //search a product from the product pool
+        function searchProduct(searchString) {
+            cbProductsGridViewPartial.PerformCallback({ searchString: searchString });
 
         }
 
-        pops();
+        //the event handler for searchProduct
+        $(document).delegate("input[value=Search]", "click", function (event) {
+            event.preventDefault();
+            searchProduct($('input[name=prodnametosearch]').val());
+            $('input[name=exitsearch]').removeClass('togglehidden');
+
+        });
+
+        //exit the search
+        $('input[name=exitsearch]').click(function () {
+            $('input[name=exitsearch]').toggleClass('togglehidden');
+            searchProduct("");
+
+        });
+
+        $(document).delegate("#add-to-cart", "click", function (event) {
+            event.preventDefault();
+            var selectedItemID = parseInt($(this).closest('tr').find('td.prodid').text().trim());
+            var noMatchFound = true;
+            $.each(carted_prods, function (index, element) {
+
+
+                if (element.itemID != selectedItemID) {
+                    noMatchFound = true;
+                } else {
+                    element.itemQuantity = element.itemQuantity + 1;
+                    noMatchFound = false;
+                    return false;
+                }
+                
+            });
+
+            if (noMatchFound) {
+                var newObj = {
+                    itemID: parseInt($(this).closest('tr').find('td.prodid').text().trim()),
+                    itemName: $(this).closest('tr').find('td.prodname').text().trim(),
+                    itemQPU: $(this).closest('tr').find('td.prodqpu').text().trim(),
+                    itemPrice: $(this).closest('tr').find('td.prodprice').text().trim(),
+                    itemQuantity: 1
+                };
+                carted_prods.push(newObj);
+
+            }
+            pops();
+        });
+
     });
 
 </script>

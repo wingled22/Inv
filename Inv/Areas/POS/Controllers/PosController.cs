@@ -13,30 +13,32 @@ namespace Inv.Areas.POS.Controllers
 
         private InvContext db = new InvContext();
 
-        //[HttpPost]
-        //public ActionResult ModelBinding([ModelBinder(typeof(DevExpressEditorsBinder))] MyModelData myModel)
-        //{
-        //...
-        //}
-
-        // GET: POS/Pos
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult ProductsGridViewCallback(string searchString) {
+        public ActionResult ProductsGridViewCallback(string searchString)
+        {
             ViewBag.searchString = searchString;
-            return PartialView("_ProductsGridViewCallback");
+            return PartialView("_ProductsGridViewCallbackPartial");
         }
 
         public ActionResult ProductsGridView(string searchString){
 
-            var products = db.Products;
+            var products = from p in db.Products select p;
             if (!String.IsNullOrEmpty(searchString)) {
-                products.Where(q => q.ProductName.Contains(searchString));
+                products = products.Where(q => q.ProductName.Contains(searchString));
             }
-            return PartialView("_ProductsGridView", products.ToList());
+            return PartialView("_ProductsGridViewPartial", products);
         }
+
+        public JsonResult SaveOrders(string searchString)
+        {
+            ViewBag.searchString = searchString;
+
+            return Json("_ProductsGridViewCallbackPartial");
+        }
+
     }
 }
