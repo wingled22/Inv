@@ -1,4 +1,5 @@
-﻿using DevExpress.Web.Mvc;
+﻿using AutoMapper;
+using DevExpress.Web.Mvc;
 using Inv.Areas.POS.Models;
 using Inv.DAL;
 using Inv.Models;
@@ -69,10 +70,19 @@ namespace Inv.Areas.POS.Controllers
         public JsonResult CheckoutProducts(string json) {
             var jsonList = JsonConvert.DeserializeObject<List<RootObject>> (json);
 
-            Order o = new Order();
-            foreach (RootObject j in jsonList) {
+            //Order o = new Order();
+            //foreach (RootObject j in jsonList) {
 
-            }
+            //}
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<RootObject, Order>()
+                .ForMember(destination => destination.ProductID,
+                opts => opts.MapFrom(source => source.ProductID));
+            });
+
+
 
             return Json(new { result =  "success"}, JsonRequestBehavior.AllowGet); ;
         }
