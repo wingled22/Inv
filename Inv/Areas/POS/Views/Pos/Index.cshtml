@@ -248,6 +248,7 @@
                 $.ajax({
                     url: '/POS/POS/CheckoutProducts',
                     data: { json: JSON.stringify(jsonToSaveToDB) },
+                    contentType: "application/json",
                     success: function (result) {
                         console.log(result);
                     }
