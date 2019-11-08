@@ -38,7 +38,7 @@
     background-color: #f1f1f1;
     position: fixed;
     height: calc(100vh - 50px);
-    overflow: scroll;
+    
     }
 
     /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
@@ -57,6 +57,9 @@
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 0;
+    height: 400px;
+    overflow: scroll;
+    overflow-x:hidden;
 }
 
 .sidebar ul li {
@@ -134,6 +137,18 @@ div.quantity-wrap input {
 .sidebar ul li div.item-wrap div.remove-item a:hover {
     text-decoration: none;
     color:maroon;
+}
+
+.sidebar #transaction-details {
+    position: absolute;
+    width: 320px;
+    display: block;
+    position: absolute;
+    bottom: 15px;
+}
+
+.sidebar #transaction-details div {
+    width: 50%;
 }
 
 input.togglehidden {

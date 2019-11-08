@@ -154,6 +154,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\POS\Controllers\PosController.cs" />
+    <Compile Include="Areas\POS\Controllers\TransactionController.cs" />
     <Compile Include="Areas\POS\POSAreaRegistration.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -187,6 +188,11 @@
     <Content Include="Areas\POS\Views\Pos\Index.cshtml" />
     <Content Include="Areas\POS\Views\Pos\_ProductsGridViewPartial.cshtml" />
     <Content Include="Areas\POS\Views\Pos\_ProductsGridViewCallbackPartial.cshtml" />
+    <Content Include="Areas\POS\Views\Transaction\Create.cshtml" />
+    <Content Include="Areas\POS\Views\Transaction\Delete.cshtml" />
+    <Content Include="Areas\POS\Views\Transaction\Details.cshtml" />
+    <Content Include="Areas\POS\Views\Transaction\Edit.cshtml" />
+    <Content Include="Areas\POS\Views\Transaction\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\inputspinner.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

@@ -1,9 +1,12 @@
 ﻿using DevExpress.Web.Mvc;
 using Inv.DAL;
+using Inv.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Inv.Areas.POS.Controllers
@@ -33,12 +36,45 @@ namespace Inv.Areas.POS.Controllers
             return PartialView("_ProductsGridViewPartial", products);
         }
 
-        public JsonResult SaveOrders(string searchString)
-        {
-            ViewBag.searchString = searchString;
+        //public JsonResult SaveOrders(List<js> searchString)
+        //{
+        //    ViewBag.searchString = searchString;
 
-            return Json("_ProductsGridViewCallbackPartial");
+        //    return Json("_ProductsGridViewCallbackPartial");
+        //}
+        [HttpGet]
+        public JsonResult TransactionCreate() {
+            
+            Transaction transaction = new Transaction() {
+                DateCreated = DateTime.Now,
+                Status = false
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Transactions.Add(transaction);
+                db.SaveChanges();
+
+                var last_id = db.Transactions.Max(q => q.TransactionID);
+                return Json(new { last_inserted_id = last_id}, JsonRequestBehavior.AllowGet);
+            }
+            else {
+                return Json(new { last_inserted_id = "Error on creating transaction"}, JsonRequestBehavior.AllowGet);
+            }
         }
+
+        //[HttpPost]
+        public JsonResult CheckoutProducts(List<JObject> json) {
+            //JObject jsonObject = new JObject(json);
+            //object model = json.AsQueryable().Reverse().TakeWhile(q => q.OrderID == null);
+
+            //db.Orders.AddRange(json);
+            //db.SaveChanges();
+
+
+            return Json(new { result =  "success"}, JsonRequestBehavior.AllowGet); ;
+        }
+
 
     }
 }

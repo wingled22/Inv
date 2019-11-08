@@ -10,8 +10,8 @@ namespace Inv.Models
     {
         public int TransactionID { get; set; }
         [Required]
-        [Display(Name ="Completed")]
-        public bool Status { get; set; }
+        [Display(Name = "Completed")]
+        public bool Status { get; set; } = false;
         public DateTime DateCreated { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
