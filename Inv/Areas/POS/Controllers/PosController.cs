@@ -1,6 +1,9 @@
-﻿using DevExpress.Web.Mvc;
+﻿using AutoMapper;
+using DevExpress.Web.Mvc;
+using Inv.Areas.POS.Models;
 using Inv.DAL;
 using Inv.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -64,12 +67,21 @@ namespace Inv.Areas.POS.Controllers
         }
 
         //[HttpPost]
-        public JsonResult CheckoutProducts(List<JObject> json) {
-            //JObject jsonObject = new JObject(json);
-            //object model = json.AsQueryable().Reverse().TakeWhile(q => q.OrderID == null);
+        public JsonResult CheckoutProducts(string json) {
+            var jsonList = JsonConvert.DeserializeObject<List<RootObject>> (json);
 
-            //db.Orders.AddRange(json);
-            //db.SaveChanges();
+            //Order o = new Order();
+            //foreach (RootObject j in jsonList) {
+
+            //}
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<RootObject, Order>()
+                .ForMember(destination => destination.ProductID,
+                opts => opts.MapFrom(source => source.ProductID));
+            });
+
 
 
             return Json(new { result =  "success"}, JsonRequestBehavior.AllowGet); ;
