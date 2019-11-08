@@ -73,13 +73,7 @@
         }
     ];
 
-    var jsonToSaveToDB = [
-        {
-            ProductID: null,
-            Quantity: null,
-            TotalPrice: null
-        }
-    ];
+    
 
     var transactionID;
 
@@ -232,16 +226,28 @@
 
 
         function checkoutNow() {
+            var jsonToSaveToDB = [
+                {
+                    ProductID: null,
+                    Quantity: null,
+                    TotalPrice: null
+                }
+            ];
 
             $.each(carted_prods, function (index, element) {
-                var newObj = {
-                    ProductID: parseInt(element.itemID),
-                    Quantity: parseInt(element.itemQuantity),
-                    TotalPrice: parseFloat(element.itemPrice)
-                };
-                jsonToSaveToDB.push(newObj);
+               
+                    var newObj = {
+                        ProductID: parseInt(element.itemID),
+                        Quantity: parseInt(element.itemQuantity),
+                        TotalPrice: parseFloat(element.itemPrice)
+                    };
+                    jsonToSaveToDB.unshift(newObj);
+          
             });
-            jsonToSaveToDB.splice(0,1);
+
+            //jsonToSaveToDB.splice(jsonToSaveToDB.findIndex(e => e.ProductID == null), 1);
+            jsonToSaveToDB = jsonToSaveToDB.filter(obj => !isNaN(obj.ProductID));
+            jsonToSaveToDB = jsonToSaveToDB.filter(obj => obj.ProductID != null)
             console.log(jsonToSaveToDB);
 
             if (jsonToSaveToDB.length > 0) {
