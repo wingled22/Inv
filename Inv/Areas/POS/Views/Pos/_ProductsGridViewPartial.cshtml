@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Inv.Entities.Product>
+
+<table class="table">
+    <tr>
+        <th style="display:none;">
+            @Html.DisplayNameFor(model => model.ProductID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuantityPerUnit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stocks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="prodid" style="display:none;">
+                @Html.DisplayFor(modelItem => item.ProductID)
+            </td>
+            <td class="prodname">
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td class="prodqpu">
+                @Html.DisplayFor(modelItem => item.QuantityPerUnit)
+            </td>
+            <td class="prodstocks">
+                @Html.DisplayFor(modelItem => item.Stocks)
+            </td>
+            <td class="prodprice">
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <button type="button" id="add-to-cart" class="btn btn-info">Add Item to cart</button>
+            </td>
+        </tr>
+    }
+</table>

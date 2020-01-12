@@ -1,0 +1,156 @@
+﻿    body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    height: 100vh;
+    }
+
+    /* Set padding to keep content from hitting the edges */
+    .body-content {
+    padding-left: 0px;
+    padding-right: 0px;
+    }
+
+    /* Override the default bootstrap behavior where horizontal description lists 
+    will truncate terms that are too long to fit in the left column 
+    */
+    .dl-horizontal dt {
+    white-space: normal;
+    }
+
+    /* Set width on the form input elements since they're 100% wide by default */
+    input,
+    select,
+    textarea {
+    max-width: 280px;
+    }
+
+    .container-full {
+    margin: 0 auto;
+    width: 100%;
+    }
+
+    /* The side navigation menu */
+    .sidebar {
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 350px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: calc(100vh - 50px);
+    
+    }
+
+    /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+    div.content {
+    margin-top: 30px;
+    margin-left: 350px;
+    padding: 1px 16px;
+    height: calc(100vh - 61px);
+    }
+
+.sidebar ul {
+    display: block;
+    list-style-type: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0;
+    height: 400px;
+    overflow: scroll;
+    overflow-x:hidden;
+}
+
+.sidebar ul li {
+    border:solid 1px grey;
+    line-height:20px;
+    width:100%;
+    box-sizing:border-box;
+}
+.sidebar ul li div.item-wrap {
+    display: inline-flex;
+    position: relative;
+    WIDTH: 313PX;
+}
+
+.sidebar ul li div.item-wrap div {
+    padding: 10px;
+}
+
+
+div.quantity-wrap input {
+    width: 60px;
+    height: 70px;
+    font-size: 20px;
+    padding-left: 9px;
+    align-content: space-around;
+    text-align: center;
+}
+
+.sidebar ul li div.item-wrap div.info-wrap p {
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.sidebar ul li div.item-wrap div.info-wrap{
+    width:130px;
+}
+
+
+.sidebar ul li div.item-wrap div.info-wrap div {
+    height: 23px;
+    overflow: hidden;
+    padding: 0;
+}
+
+
+.sidebar ul li div.item-wrap div.info-total {
+    vertical-align:text-bottom;
+}
+
+
+.sidebar ul li div.item-wrap div.info-total * {
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+
+.sidebar ul li div.item-wrap div.remove-item {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    font-weight: 200;
+    font-size: 30px;
+}
+
+.sidebar ul li div.item-wrap div.remove-item a{
+    text-decoration:none;
+}
+
+.sidebar ul li div.item-wrap div.remove-item a:hover {
+    text-decoration: none;
+    color:maroon;
+}
+
+.sidebar #transaction-details {
+    position: absolute;
+    width: 320px;
+    display: block;
+    position: absolute;
+    bottom: 15px;
+}
+
+.sidebar #transaction-details div {
+    width: 50%;
+}
+
+input.togglehidden {
+    display: none;
+}

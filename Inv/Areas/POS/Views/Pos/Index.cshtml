@@ -1,0 +1,267 @@
+﻿@*@model IEnumerable<Inv.Models.Product>*@
+@model IEnumerable<Inv.Entities.Product>
+@{
+    ViewBag.Title = "POS Register";
+}
+<script id='cartItem' type='text/template'>
+    <li>
+        <div class="container_for_every_carted_prods">
+            <p id="item_id" style="display:none;"></p>
+            <div class="item-wrap">
+                <div class="quantity-wrap">
+                    <input type="number" name="Quantity" min="0" value="" />
+                </div>
+                <div class="info-wrap">
+                    <p class="item-name">Item 1</p>
+                    <div><p class="item-qpu">quantity per unit sdfsdfsdf</p></div>
+                    <p class="item-price">Price: 12.55</p>
+                </div>
+                <div class="info-total">
+                    <div>
+                        <p><i>Total:</i></p>
+                        <h3 class="item-total">202</h3>
+                    </div>
+                </div>
+                <div class="remove-item">
+                    <a class="remove">&times</a>
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+
+<div class="sidebar">
+    <div>
+        <h3>Orders</h3>
+        <hr />
+    </div>
+    <ul class='cart-items' id="cart-items"></ul>
+
+    <div id="transaction-details">
+        <div class="col-sm-6">
+            <p>TOTAL:</p>
+            <b>0.00</b>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-success" id="proceed-checkout">Checkout</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="content">
+    <button class="btn-primary small" id="add-transaction">Add a Transaction</button>
+    <div class="col-sm-12" style="">
+
+        <p>
+            Search Product: <input type="text" name="prodnametosearch" value="" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <input class="btn btn-primary togglehidden" name="exitsearch" type="submit" value="Exit Search" />
+        </p>
+
+        @Html.Partial("_ProductsGridViewCallbackPartial")
+    </div>
+</div>
+
+<script>
+    var carted_prods = [
+        {
+            itemID: null,
+            itemName: null ,
+            itemQPU: null,
+            itemPrice: null,
+            itemQuantity: null
+        }
+    ];
+
+    var jsonToSaveToDB = [
+        {
+            ProductID: null,
+            Quantity: null,
+            TotalPrice: null
+        }
+    ];
+
+    var transactionID;
+
+    $(document).ready(function () {
+        var cart = $('.cart-items');
+        //calculate the item per total quantity * price
+        function calculateSubTotal(quantity, price) {
+            return price * quantity;
+        }
+
+        function calculateTotal() {
+            var item_subtotal = 0.00;
+            var item_total;
+
+            $("ul#cart-items li").each(function () {
+                item_total = parseFloat($(this).find("h3.item-total").text().trim());
+                console.log(item_total)
+
+                item_subtotal += item_total;
+            });
+            
+            $("div#transaction-details div b").text(item_subtotal);
+        }
+
+        //remove an item to the cart
+        $(document).delegate('a.remove', 'click', function () {
+            let item_id = $(this).closest('li').find('#item_id').text();
+            //remove the removed item from the carted_prods json
+            carted_prods.forEach(function (element, index) {
+                if (parseInt(item_id) == element.itemID) {
+                    carted_prods.splice(index, 1);
+                }
+            });
+            pops();
+            calculateTotal();
+        });
+
+        //populate the cart with items from the cart_prods JSON
+        function pops() {
+            cart.empty();
+            carted_prods.forEach(function (element, index) {
+                if (element.itemID != null) {
+                    var $template = $($('#cartItem').text());
+                    $template.find('p#item_id').text(element.itemID);
+                    $template.find('input').val(element.itemQuantity);
+                    $template.find('.item-name').text(element.itemName);
+                    $template.find('.item-qpu').text(element.itemQPU);
+                    $template.find('.item-price').text(element.itemPrice);
+                    $template.find('.item-total').text(calculateSubTotal(element.itemQuantity, element.itemPrice));
+                    $template.find("#id").text(element.itemID);
+                    $("#cart-items").prepend($template);
+                }
+            });
+        }
+
+        //search a product from the product pool
+        function searchProduct(searchString) {
+            cbProductsGridViewPartial.PerformCallback({ searchString: searchString });
+
+        }
+
+        //the event handler for searchProduct
+        $(document).delegate("input[value=Search]", "click", function (event) {
+            event.preventDefault();
+            searchProduct($('input[name=prodnametosearch]').val());
+            $('input[name=exitsearch]').removeClass('togglehidden');
+
+        });
+
+        //exit the search   
+        $('input[name=exitsearch]').click(function () {
+            $('input[name=exitsearch]').toggleClass('togglehidden');
+            searchProduct("");
+
+        });
+
+        //add a product to cart
+        $(document).delegate("#add-to-cart", "click", function (event) {
+            event.preventDefault();
+            var selectedItemID = parseInt($(this).closest('tr').find('td.prodid').text().trim());
+            var noMatchFound = true;
+
+            //find if the product was already on the cart
+            $.each(carted_prods, function (index, element) {
+                if (element.itemID != selectedItemID) {
+                    noMatchFound = true;
+                } else {
+                    //if found add 1 to the quatity
+                    element.itemQuantity = element.itemQuantity + 1;
+                    noMatchFound = false;
+                    return false;
+                }
+                
+            });
+
+            // if not found then add it to the cart
+            if (noMatchFound) {
+                var newObj = {
+                    itemID: parseInt($(this).closest('tr').find('td.prodid').text().trim()),
+                    itemName: $(this).closest('tr').find('td.prodname').text().trim(),
+                    itemQPU: $(this).closest('tr').find('td.prodqpu').text().trim(),
+                    itemPrice: $(this).closest('tr').find('td.prodprice').text().trim(),
+                    itemQuantity: 1
+                };
+                carted_prods.push(newObj);
+            }
+
+            //then populate the cart
+            pops();
+            calculateTotal();
+        });
+
+        $(document).delegate("input[type=number]", "click", function () {
+            var idOfSelectedCartedProd = parseInt($(this).closest('.container_for_every_carted_prods').find("#item_id").text().trim());
+            var newVal = parseInt($(this).val());
+            //$(this).closest(".item-wrap").find(".item-total").text($(this).val() * parseFloat($(this).closest(".item-wrap").find(".item-price").text().trim()));
+
+            carted_prods.forEach(function (element) {
+                if (element.itemID == idOfSelectedCartedProd) {
+                    element.itemQuantity = newVal;
+                    pops();
+                }
+
+            });
+            calculateTotal();
+        });
+
+        $(document).delegate("input[type=number]", "keydown", function () {
+            var idOfSelectedCartedProd = parseInt($(this).closest('.container_for_every_carted_prods').find("#item_id").text().trim());
+            var newVal = parseInt($(this).val());
+            //$(this).closest(".item-wrap").find(".item-total").text($(this).val() * parseFloat($(this).closest(".item-wrap").find(".item-price").text().trim()));
+
+            carted_prods.forEach(function (element) {
+                if (element.itemID == idOfSelectedCartedProd) {
+                    element.itemQuantity = newVal;
+                    pops();
+                }
+
+            });
+
+        });
+
+
+        function transactionCreate() {
+            $.get('/POS/POS/TransactionCreate', function (result) {
+                transactionID = result.last_inserted_id;
+                console.log(transactionID);
+            });
+        }
+
+
+        function checkoutNow() {
+
+            $.each(carted_prods, function (index, element) {
+                var newObj = {
+                    ProductID: parseInt(element.itemID),
+                    Quantity: parseInt(element.itemQuantity),
+                    
+                };
+                jsonToSaveToDB.push(newObj);
+            });
+            jsonToSaveToDB.splice(0,1);
+            console.log(jsonToSaveToDB);
+
+            if (jsonToSaveToDB.length > 0) {
+                $.ajax({
+                    url: '/POS/POS/CheckoutProducts',
+                    data: { json: JSON.stringify(jsonToSaveToDB) },
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+            
+            
+            //console.log("Checkout now.");
+        }
+
+        $(document).delegate('#add-transaction', 'click', transactionCreate);
+        $(document).delegate('#proceed-checkout', 'click', checkoutNow);
+
+    });
+
+</script>
