@@ -18,9 +18,9 @@
           </Key>
           <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="Transaction_TransactionID" Type="int" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="Transaction_TransactionID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -57,7 +57,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Order_dbo_Transaction_Transaction_TransactionID">
-          <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Transaction">
@@ -169,9 +169,9 @@
           </Key>
           <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="Transaction_TransactionID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Transaction_TransactionID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="InvModel.FK_dbo_Order_dbo_Product_ProductID" FromRole="Order" ToRole="Product" />
           <NavigationProperty Name="Transaction" Relationship="InvModel.FK_dbo_Order_dbo_Transaction_Transaction_TransactionID" FromRole="Order" ToRole="Transaction" />
         </EntityType>
@@ -190,7 +190,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Order_dbo_Transaction_Transaction_TransactionID">
-          <End Type="InvModel.Transaction" Role="Transaction" Multiplicity="0..1" />
+          <End Type="InvModel.Transaction" Role="Transaction" Multiplicity="1" />
           <End Type="InvModel.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Transaction">

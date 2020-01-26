@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<Inv.Models.Product>*@
-@model IEnumerable<Inv.Entities.Product>
+﻿@model IEnumerable<Inv.Entities.Product>
 @{
     ViewBag.Title = "POS Register";
 }
@@ -196,8 +195,7 @@
         $(document).delegate("input[type=number]", "click", function () {
             var idOfSelectedCartedProd = parseInt($(this).closest('.container_for_every_carted_prods').find("#item_id").text().trim());
             var newVal = parseInt($(this).val());
-            //$(this).closest(".item-wrap").find(".item-total").text($(this).val() * parseFloat($(this).closest(".item-wrap").find(".item-price").text().trim()));
-
+         
             carted_prods.forEach(function (element) {
                 if (element.itemID == idOfSelectedCartedProd) {
                     element.itemQuantity = newVal;
@@ -238,17 +236,19 @@
                 var newObj = {
                     ProductID: parseInt(element.itemID),
                     Quantity: parseInt(element.itemQuantity),
-                    
+                    Transaction_TransactionID: transactionID
                 };
                 jsonToSaveToDB.push(newObj);
             });
-            jsonToSaveToDB.splice(0,1);
+            jsonToSaveToDB.splice(0, 1);
+            jsonToSaveToDB.shift();
             console.log(jsonToSaveToDB);
 
             if (jsonToSaveToDB.length > 0) {
                 $.ajax({
-                    url: '/POS/POS/CheckoutProducts',
-                    data: { json: JSON.stringify(jsonToSaveToDB) },
+                    url: '/POS/POS/PurchaseProducts',
+                    type: "POST",
+                    data: { orders: jsonToSaveToDB },
                     success: function (result) {
                         console.log(result);
                     }

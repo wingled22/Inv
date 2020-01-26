@@ -59,12 +59,26 @@ namespace Inv.Areas.POS.Controllers
 
         //[HttpPost]
         public JsonResult CheckoutProducts(List<JObject> json) {
-            return Json(new { result =  "success"}, JsonRequestBehavior.AllowGet); ;
+            return Json(new { result =  "success"}, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult PurchaseProducts(List<Order> orders) { 
-            
-            return View();
+        [HttpPost]
+        public JsonResult PurchaseProducts(List<Order> orders) {
+
+            if (ModelState.IsValid) {
+                foreach (var item in orders)
+                {
+                    item.DateCreated = DateTime.Now;
+                }
+                db.Orders.AddRange(orders);
+                db.SaveChanges();
+                ViewBag.PurchaseMessage = "success";
+                return Json(new { result = "success" }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            //return View();
+            return Json(new { result = "error" }, JsonRequestBehavior.AllowGet);
         }
 
 
