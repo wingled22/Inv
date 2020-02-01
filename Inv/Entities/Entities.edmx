@@ -21,6 +21,8 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="Transaction_TransactionID" Type="int" Nullable="false" />
+          <Property Name="SubTotalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="int" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -41,6 +43,7 @@
           <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="Discount" Type="int" />
         </EntityType>
         <Association Name="FK_dbo_Order_dbo_Product_ProductID">
           <End Role="Product" Type="Self.Product" Multiplicity="1">
@@ -124,15 +127,6 @@
           <NavigationProperty Name="Category" Relationship="Self.FK_Product_Category" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Orders" Relationship="InvModel.FK_dbo_Order_dbo_Product_ProductID" FromRole="Product" ToRole="Order" />
         </EntityType>
-        <EntityType Name="Transaction">
-          <Key>
-            <PropertyRef Name="TransactionID" />
-          </Key>
-          <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Orders" Relationship="InvModel.FK_dbo_Order_dbo_Transaction_Transaction_TransactionID" FromRole="Transaction" ToRole="Order" />
-        </EntityType>
         <Association Name="FK_Product_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -148,12 +142,12 @@
         <EntityContainer Name="InvEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
           <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <EntitySet Name="Orders" EntityType="InvModel.Order" />
+          <EntitySet Name="Transactions" EntityType="InvModel.Transaction" />
           <AssociationSet Name="FK_dbo_Order_dbo_Product_ProductID" Association="InvModel.FK_dbo_Order_dbo_Product_ProductID">
             <End Role="Product" EntitySet="Products" />
             <End Role="Order" EntitySet="Orders" />
@@ -172,8 +166,20 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Transaction_TransactionID" Type="Int32" Nullable="false" />
+          <Property Name="SubTotalPrice" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Product" Relationship="InvModel.FK_dbo_Order_dbo_Product_ProductID" FromRole="Order" ToRole="Product" />
           <NavigationProperty Name="Transaction" Relationship="InvModel.FK_dbo_Order_dbo_Transaction_Transaction_TransactionID" FromRole="Order" ToRole="Transaction" />
+          <Property Name="Discount" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Discount" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="InvModel.FK_dbo_Order_dbo_Transaction_Transaction_TransactionID" FromRole="Transaction" ToRole="Order" />
         </EntityType>
         <Association Name="FK_dbo_Order_dbo_Product_ProductID">
           <End Type="InvModel.Product" Role="Product" Multiplicity="1">
@@ -228,23 +234,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="InvModel.Transaction">
-              <MappingFragment StoreEntitySet="Transaction">
-                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="InvModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="SubTotalPrice" ColumnName="SubTotalPrice" />
                 <ScalarProperty Name="Transaction_TransactionID" ColumnName="Transaction_TransactionID" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="InvModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

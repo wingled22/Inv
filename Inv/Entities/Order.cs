@@ -19,6 +19,8 @@ namespace Inv.Entities
         public int Quantity { get; set; }
         public System.DateTime DateCreated { get; set; }
         public int Transaction_TransactionID { get; set; }
+        public Nullable<decimal> SubTotalPrice { get; set; }
+        public Nullable<int> Discount { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual Transaction Transaction { get; set; }

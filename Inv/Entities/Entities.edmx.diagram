@@ -7,9 +7,9 @@
       <Diagram DiagramId="3ff711d62eb643ae871b6ac4bb047997" Name="Diagram1">
         <EntityTypeShape EntityType="InvModel.Category" Width="1.5" PointX="1.125" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="InvModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="InvModel.Transaction" Width="1.5" PointX="7.875" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="InvModel.FK_Product_Category" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="InvModel.Order" Width="1.5" PointX="5.625" PointY="1.25" />
+        <EntityTypeShape EntityType="InvModel.Order" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="InvModel.Transaction" Width="1.5" PointX="3" PointY="5.375" />
         <AssociationConnector Association="InvModel.FK_dbo_Order_dbo_Product_ProductID" />
         <AssociationConnector Association="InvModel.FK_dbo_Order_dbo_Transaction_Transaction_TransactionID" />
         </Diagram>
