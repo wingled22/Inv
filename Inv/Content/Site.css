@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: #f6f6f6;
+    color: #444;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -22,3 +24,94 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.navbar {
+    background-color: #20629b;
+    color: #eee;
+}
+
+
+
+.card {
+    // border-radius:1rem;
+}
+
+.mysites-card:hover {
+    -webkit-transition: 0.2s linear;
+    -webkit-transform: scale(0.96);
+    box-shadow: 0 0.4rem 0.9rem 0 #E2EAF2;
+    cursor: pointer;
+}
+
+
+
+// .card-img-top {
+    // // border-top-left-radius: 10px;
+    // // border-top-right-radius: 10px;
+    // background:#eee;
+    // height:148px;
+    // width:100%;
+    //
+}
+
+.card-img-top {
+    background: #eee;
+    height: 148px;
+    width: 100%;
+    position: relative;
+}
+
+.wp-logo, .weebly-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.wp-bg {
+    background: #2EA2CC;
+}
+
+.weebly-bg {
+    background: #0081FF;
+}
+
+/* Temporary Box Shadow to be deleted when added to portal */
+.temporary-box-shadow {
+    box-shadow: 0 0.4rem 0.8rem 0 #E2EAF2;
+}
+
+
+
+
+.arrow-group {
+    width: 35px;
+    height: 30px;
+    position: relative;
+    .arrow-head
+
+{
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    position: absolute;
+    left: 2px;
+    top: 7px;
+}
+
+.arrow-steam {
+    height: 3px;
+    width: 12px;
+    background: black;
+    position: absolute;
+    top: 10px;
+}
+}
+
+

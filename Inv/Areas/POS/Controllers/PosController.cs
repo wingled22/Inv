@@ -81,6 +81,11 @@ namespace Inv.Areas.POS.Controllers
             return Json(new { result = "error" }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult TEST() 
+        {
+            return View();
+        }
+
 
     }
 }

@@ -2,6 +2,21 @@
 @{
     ViewBag.Title = "POS Register";
 }
+
+@* 
+   //TEMPLATES FOR POPULATE    
+*@
+<script id='recieptItemTemplate' type='text/template'>
+    <div class="left">
+        <p class="name">Product 1</p>
+        <p class="quantity"> 3</p>
+    </div>
+    <div class="right">
+        <div class="price-per-prod"> 100</div>
+        <div class="total-price">300</div>
+    </div>
+</script>
+
 <script id='cartItem' type='text/template'>
     <li>
         <div class="container_for_every_carted_prods">
@@ -29,13 +44,75 @@
     </li>
 </script>
 
+
+
+
+<div id="blinds">
+    <div class="container">
+        <button id="add-transaction">Add a Transaction</button>
+    </div>
+</div>
+
+
+<!-- MODALS -->
+@*
+    //TODO: payment modal
+       where the user can input the payment given by the customer,
+       calculate the change,
+       also give discount.
+*@
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        @* content goes here *@
+
+    </div>
+</div>
+
+
+@*
+    //TODO: reciept modal
+       reciept for the transaction
+*@
+<div id="recieptModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        @* content goes here *@
+        <div id="reciept">
+            <h4><center>Reciept</center></h4>
+            <div>
+                <div class="reciept-prod-grid-header">
+                    <div class="left header"><h5>Products</h5></div>
+                    <div class="right header"><h5>Price</h5></div>
+                </div>
+                <div class="reciept-prod-grid">
+                    @* all the item bought goes here *@
+                </div>
+            </div>
+            <div class="reciept-prod-grid-footer">
+                @* the total of the payment goes here *@
+                <div class="left">
+                    <h3>Total</h3>
+                </div>
+                <div class="right">
+                    <h3>600.00</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@*
+    //TODO: cart sidebar
+*@
 <div class="sidebar">
     <div>
         <h3>Orders</h3>
         <hr />
     </div>
     <ul class='cart-items' id="cart-items"></ul>
-
     <div id="transaction-details">
         <div class="col-sm-6">
             <p>TOTAL:</p>
@@ -44,40 +121,34 @@
         <div class="col-sm-6">
             <button type="button" class="btn btn-success" id="proceed-checkout">Checkout</button>
         </div>
-
     </div>
 </div>
 
-<div class="content">
-    <button class="btn-primary small" id="add-transaction">Add a Transaction</button>
-    <div class="col-sm-12" style="">
 
+@*
+    //TODO: user can make a search for a product to be add to the cart
+*@
+<div class="content">
+    <div class="col-sm-12" style="">
         <p>
             Search Product: <input type="text" name="prodnametosearch" value="" />
             <input type="submit" value="Search" class="btn btn-primary" />
             <input class="btn btn-primary togglehidden" name="exitsearch" type="submit" value="Exit Search" />
         </p>
-
         @Html.Partial("_ProductsGridViewCallbackPartial")
     </div>
 </div>
 
+
 <script>
+
     var carted_prods = [
         {
             itemID: null,
-            itemName: null ,
+            itemName: null,
             itemQPU: null,
             itemPrice: null,
             itemQuantity: null
-        }
-    ];
-
-    var jsonToSaveToDB = [
-        {
-            ProductID: null,
-            Quantity: null,
-            TotalPrice: null
         }
     ];
 
@@ -85,24 +156,49 @@
 
     $(document).ready(function () {
         var cart = $('.cart-items');
+        var reciept = $('.reciept-prod-grid');
+
         //calculate the item per total quantity * price
         function calculateSubTotal(quantity, price) {
             return price * quantity;
         }
 
         function calculateTotal() {
-            var item_subtotal = 0.00;
+            var total = 0.00;
             var item_total;
 
             $("ul#cart-items li").each(function () {
                 item_total = parseFloat($(this).find("h3.item-total").text().trim());
-                console.log(item_total)
-
-                item_subtotal += item_total;
+                //console.log(item_total)
+                total += item_total;
             });
-            
-            $("div#transaction-details div b").text(item_subtotal);
+
+            return total;
+            $("#reciet div div.right h3").text(total);
         }
+
+        function openModal(modalName) {
+            // Get the modal
+            var modal = document.getElementById(modalName);
+            modal.style.display = "block";
+
+            //window.onclick = function (event) {
+            //    if (event.target == modal) {
+            //        modal.style.display = "none";
+            //    }
+            //}
+        }
+
+        //function closeModal(modalName) {
+        //    var modal = document.getElementById(modalName);
+        //    modal.style.display = "none";
+        //}
+
+        $("span.close").click(function () {
+            $(".modal").each(function () {
+                $(this).hide();
+            });
+        });
 
         //remove an item to the cart
         $(document).delegate('a.remove', 'click', function () {
@@ -113,12 +209,12 @@
                     carted_prods.splice(index, 1);
                 }
             });
-            pops();
-            calculateTotal();
+            populateCart();
+            $("div#transaction-details div b").text(calculateTotal());
         });
 
         //populate the cart with items from the cart_prods JSON
-        function pops() {
+        function populateCart() {
             cart.empty();
             carted_prods.forEach(function (element, index) {
                 if (element.itemID != null) {
@@ -131,6 +227,21 @@
                     $template.find('.item-total').text(calculateSubTotal(element.itemQuantity, element.itemPrice));
                     $template.find("#id").text(element.itemID);
                     $("#cart-items").prepend($template);
+                }
+            });
+        }
+
+        //populate the reciept with items from the cart_prods JSON
+        function populateReciept() {
+            reciept.empty();
+            carted_prods.forEach(function (element, index) {
+                if (element.itemID != null) {
+                    var $template = $($('#recieptItemTemplate').text());
+                    $template.find('.name').text(element.itemName);
+                    $template.find('.quantity').text(element.itemQuantity);
+                    $template.find('.price-per-prod').text(element.itemPrice);
+                    $template.find('.total-price').text(calculateSubTotal(element.itemQuantity, element.itemPrice));
+                    $(".reciept-prod-grid").prepend($template);
                 }
             });
         }
@@ -149,7 +260,7 @@
 
         });
 
-        //exit the search   
+        //exit the search
         $('input[name=exitsearch]').click(function () {
             $('input[name=exitsearch]').toggleClass('togglehidden');
             searchProduct("");
@@ -172,7 +283,7 @@
                     noMatchFound = false;
                     return false;
                 }
-                
+
             });
 
             // if not found then add it to the cart
@@ -188,22 +299,22 @@
             }
 
             //then populate the cart
-            pops();
-            calculateTotal();
+            populateCart();
+            $("div#transaction-details div b").text(calculateTotal());
         });
 
         $(document).delegate("input[type=number]", "click", function () {
             var idOfSelectedCartedProd = parseInt($(this).closest('.container_for_every_carted_prods').find("#item_id").text().trim());
             var newVal = parseInt($(this).val());
-         
+
             carted_prods.forEach(function (element) {
                 if (element.itemID == idOfSelectedCartedProd) {
                     element.itemQuantity = newVal;
-                    pops();
+                    populateCart();
                 }
 
             });
-            calculateTotal();
+            $("div#transaction-details div b").text(calculateTotal());
         });
 
         $(document).delegate("input[type=number]", "keydown", function () {
@@ -214,7 +325,7 @@
             carted_prods.forEach(function (element) {
                 if (element.itemID == idOfSelectedCartedProd) {
                     element.itemQuantity = newVal;
-                    pops();
+                    populateCart();
                 }
 
             });
@@ -223,14 +334,35 @@
 
 
         function transactionCreate() {
-            $.get('/POS/POS/TransactionCreate', function (result) {
-                transactionID = result.last_inserted_id;
-                console.log(transactionID);
-            });
+            $('#blinds').hide();
+            //$.get('/POS/POS/TransactionCreate', function (result) {
+            //    transactionID = result.last_inserted_id;
+            //    console.log(transactionID);
+            //});
+
+            transactionID = 2;
+
         }
 
+        var jsonToSaveToDB = [
+            {
+                ProductID: null,
+                Quantity: null,
+                TotalPrice: null
+            }
+        ];
 
         function checkoutNow() {
+            populateReciept();
+            $("#reciept div div.right h3").text(calculateTotal());
+
+            jsonToSaveToDB = [
+                {
+                    ProductID: null,
+                    Quantity: null,
+                    TotalPrice: null
+                }
+            ];
 
             $.each(carted_prods, function (index, element) {
                 var newObj = {
@@ -244,23 +376,27 @@
             jsonToSaveToDB.shift();
             console.log(jsonToSaveToDB);
 
-            if (jsonToSaveToDB.length > 0) {
-                $.ajax({
-                    url: '/POS/POS/PurchaseProducts',
-                    type: "POST",
-                    data: { orders: jsonToSaveToDB },
-                    success: function (result) {
-                        console.log(result);
-                    }
-                });
-            }
-            
-            
+            //if (jsonToSaveToDB.length > 0) {
+            //    $.ajax({
+            //        url: '/POS/POS/PurchaseProducts',
+            //        type: "POST",
+            //        data: { orders: jsonToSaveToDB },
+            //        success: function (result) {
+            //            console.log(result);
+            //        }
+            //    });
+            //}
+
+            openModal("recieptModal");
+
             //console.log("Checkout now.");
         }
 
         $(document).delegate('#add-transaction', 'click', transactionCreate);
         $(document).delegate('#proceed-checkout', 'click', checkoutNow);
+
+        
+        
 
     });
 

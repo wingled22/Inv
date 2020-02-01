@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Inv.Entities.Order>
+
+<div id="reciept">
+    <h3><center>Reciept</center></h3>
+    <div>
+        <div class="reciept-prod-grid heading">
+            <div class="left header"><h3>Products</h3></div>
+            <div class="right header"><h3>Price</h3></div>
+        </div>
+        <div class="reciept-prod-grid body">
+
+            @{
+           foreach (var item in Model)
+           {
+                <!--    item    -->
+                <div class="left">
+                    <p class="name">Product 1</p>
+                    <p class="quantity"> 3</p>
+                </div>
+                <div class="right">
+                    <div class="price-per-prod"> 100</div>
+                    <div class="total-price">300</div>
+                </div>
+
+           }
+
+            }
+
+            <!--    item    -->
+            <div class="left">
+                <p class="name">Product 1</p>
+                <p class="quantity"> 3</p>
+            </div>
+            <div class="right">
+                <div class="price-per-prod"> 100</div>
+                <div class="total-price">300</div>
+            </div>
+
+
+            <!--   another item     -->
+            @*<div class="left">
+            <p class="name">Product 1</p>
+            <p class="quantity"> 3</p>
+        </div>
+        <div class="right">
+            <div class="price-per-prod"> 100</div>
+            <div class="total-price">300</div>
+        </div>*@
+        </div>
+    </div>
+    <div class="reciept-prod-grid body">
+        <div class="left">
+            <h3>Total</h3>
+        </div>
+        <div class="right">
+            <h3>600.00</h3>
+        </div>
+    </div>
+</div>

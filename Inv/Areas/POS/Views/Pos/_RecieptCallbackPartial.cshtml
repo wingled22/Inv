@@ -1,0 +1,11 @@
+﻿@Html.DevExpress().CallbackPanel(
+    settings =>
+    {
+        settings.Name = "cbProductsGridViewPartial";
+        settings.CallbackRouteValues = new { Area = "POS", Controller = "Pos", Action = "RecieptCallback"};
+        settings.SetContent(() =>
+        {
+            @Html.RenderAction("RecieptPartial", "Pos", new { area = "POS", id = ViewBag.orderID});
+        });
+    }).GetHtml()
+

@@ -33,10 +33,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Category", "Index", "Category")</li>
-                    <li>@Html.ActionLink("Product", "Index", "Product")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home" , new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("Category", "Index", "Category", new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("Product", "Index", "Products", new { Area = "" }, null)</li>
                     <li>@Html.ActionLink("POS", "Index", "POS", new { Area = "Pos" }, null)</li>
                 </ul>
             </div>
