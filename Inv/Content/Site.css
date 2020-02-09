@@ -26,15 +26,15 @@ textarea {
 }
 
 
-.navbar {
+/*.navbar {
     background-color: #20629b;
     color: #eee;
-}
+}*/
 
 
 
 .card {
-    // border-radius:1rem;
+    border-radius:1rem;
 }
 
 .mysites-card:hover {
@@ -46,13 +46,13 @@ textarea {
 
 
 
-// .card-img-top {
-    // // border-top-left-radius: 10px;
-    // // border-top-right-radius: 10px;
-    // background:#eee;
-    // height:148px;
-    // width:100%;
-    //
+.card-img-top {
+ border-top-left-radius: 10px;
+ border-top-right-radius: 10px;
+ background:#eee;
+ height:148px;
+ width:100%;
+ 
 }
 
 .card-img-top {
@@ -91,7 +91,8 @@ textarea {
     width: 35px;
     height: 30px;
     position: relative;
-    .arrow-head
+    /*.arrow-head*/
+}
 
 {
     border: solid black;
@@ -112,6 +113,6 @@ textarea {
     position: absolute;
     top: 10px;
 }
-}
+
 
 

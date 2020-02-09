@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Inv.Entities.Order>
+@using (Html.BeginForm())
+{
+
+    @Html.DevExpress().GridView(settings => {
+
+        settings.Name = "OrdersGridView";
+        settings.CallbackRouteValues = new { Area = "POS", Controller = "Orders", Action = "OrdersGridViewPartial", from = ViewData["from"], to= ViewData["to"] };
+        settings.KeyFieldName = "OrderGridView";
+
+        settings.Columns.Add("Transaction.TransactionID");
+        settings.Columns.Add("Product.ProductName");
+        settings.Columns.Add("Quantity");
+        settings.Columns.Add("Product.Price");
+        settings.Columns.Add("SubTotalPrice");
+        settings.Columns.Add("DateCreated");
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        //settings.Settings.ShowHeaderFilterButton = true;
+
+
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+
+        settings.Toolbars.Add(t =>
+        {
+            t.Items.Add(i =>
+            {
+                i.Command = GridViewToolbarCommand.ExportToXls;
+                i.Text = "Export to Excel";
+            });
+            t.Items.Add(i =>
+            {
+                i.Command = GridViewToolbarCommand.ExportToCsv;
+                i.Text = "Export to CSV";
+                //i.Image.IconID = DevExpress.Web.ASPxThemes.IconID.ExportExporttocsv16x16gray;
+            });
+        });
+
+        settings.SettingsExport.FileName = "Sales_Report";
+
+    }).Bind(Model).GetHtml()
+}

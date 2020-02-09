@@ -283,3 +283,76 @@ input.togglehidden {
     .reciept-prod-grid .right .total-price {
         text-align: right;
     }
+
+@media print {
+
+    body {
+        width : 400px;
+    }
+#reciept {
+    width: 350px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    background: #F1F1F1;
+    box-shadow: 1px 1px grey;
+}
+
+.reciept-prod-grid-header {
+    display: grid;
+    grid-template-columns: auto 30%;
+    grid-gap: 50px;
+    grid-row-gap: 5px;
+    /*   background-color: #2196F3; */
+    padding: 10px;
+}
+
+.reciept-prod-grid {
+    display: grid;
+    grid-template-columns: auto 30%;
+    grid-gap: 50px;
+    grid-row-gap: 5px;
+    /*   background-color: #2196F3; */
+    padding: 10px;
+}
+
+.reciept-prod-grid-footer{
+    display: grid;
+    grid-template-columns: auto 30%;
+    grid-gap: 50px;
+    grid-row-gap: 5px;
+    /*   background-color: #2196F3; */
+    padding: 10px;
+}
+
+    .reciept-prod-grid .left {
+        /*   background: white; */
+        /*   padding: 5px; */
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+
+    .reciept-prod-grid div p {
+        margin: 0;
+    }
+
+    .reciept-prod-grid .right {
+        /*   background: white; */
+        padding: 5px;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        /*   text-align: right; */
+    }
+
+    .reciept-prod-grid .left .quantity {
+        text-align: right;
+    }
+
+    .reciept-prod-grid .right .total-price {
+        text-align: right;
+    }
+
+
+
+
+}

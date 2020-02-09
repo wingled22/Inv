@@ -158,7 +158,7 @@
     <Compile Include="Areas\POS\POSAreaRegistration.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Entities\Category.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
@@ -228,14 +228,13 @@
     <Content Include="Entities\Entities.edmx.diagram">
       <DependentUpon>Entities.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\POS\Views\Orders\Create.cshtml" />
-    <Content Include="Areas\POS\Views\Orders\Delete.cshtml" />
-    <Content Include="Areas\POS\Views\Orders\Details.cshtml" />
-    <Content Include="Areas\POS\Views\Orders\Edit.cshtml" />
     <Content Include="Areas\POS\Views\Orders\Index.cshtml" />
     <Content Include="Areas\POS\Views\Pos\TEST.cshtml" />
     <Content Include="Areas\POS\Views\Pos\_RecieptCallbackPartial.cshtml" />
     <Content Include="Areas\POS\Views\Pos\_RecieptPartial.cshtml" />
+    <Content Include="Areas\POS\Views\Orders\_OrdersGridViewPartial.cshtml" />
+    <Content Include="Areas\POS\Views\Orders\_OrdersGridViewCallbackPartial.cshtml" />
+    <Content Include="Areas\POS\Views\Orders\_OrdersGridViewPagingPartial.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\inputspinner.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -272,11 +271,11 @@
     <Content Include="Views\Category\Details.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
-    <Content Include="Views\Products\Create.cshtml" />
-    <Content Include="Views\Products\Delete.cshtml" />
-    <Content Include="Views\Products\Details.cshtml" />
-    <Content Include="Views\Products\Edit.cshtml" />
-    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\Delete.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,18 +10,18 @@ using Inv.Entities;
 
 namespace Inv.Controllers
 {
-    public class ProductsController : Controller
+    public class ProductController : Controller
     {
         private InvEntities db = new InvEntities();
 
-        // GET: Products
+        // GET: Product
         public ActionResult Index()
         {
             var products = db.Products.Include(p => p.Category);
             return View(products.ToList());
         }
 
-        // GET: Products/Details/5
+        // GET: Product/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,14 +36,14 @@ namespace Inv.Controllers
             return View(product);
         }
 
-        // GET: Products/Create
+        // GET: Product/Create
         public ActionResult Create()
         {
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Product/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -61,7 +61,7 @@ namespace Inv.Controllers
             return View(product);
         }
 
-        // GET: Products/Edit/5
+        // GET: Product/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,7 +77,7 @@ namespace Inv.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
+        // POST: Product/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -94,7 +94,7 @@ namespace Inv.Controllers
             return View(product);
         }
 
-        // GET: Products/Delete/5
+        // GET: Product/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,7 +109,7 @@ namespace Inv.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
+        // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

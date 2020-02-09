@@ -44,6 +44,16 @@
     </li>
 </script>
 
+<script>
+
+    function printReciept() {
+        var restorePage = document.body.innerHTML;
+        var printContent = $(".printme").html();
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = restorePage;
+    }
+</script>
 
 
 
@@ -74,11 +84,11 @@
     //TODO: reciept modal
        reciept for the transaction
 *@
-<div id="recieptModal" class="modal">
+<div id="recieptModal" class="modal ">
     <div class="modal-content">
         <span class="close">&times;</span>
         @* content goes here *@
-        <div id="reciept">
+        <div id="reciept" class="printme">
             <h4><center>Reciept</center></h4>
             <div>
                 <div class="reciept-prod-grid-header">
@@ -98,8 +108,11 @@
                     <h3>600.00</h3>
                 </div>
             </div>
-        </div>
 
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary" onclick="printReciept()">Print Reciept</button>
+        </div>
     </div>
 </div>
 
@@ -335,20 +348,21 @@
 
         function transactionCreate() {
             $('#blinds').hide();
-            //$.get('/POS/POS/TransactionCreate', function (result) {
-            //    transactionID = result.last_inserted_id;
-            //    console.log(transactionID);
-            //});
+            $.get('/POS/POS/TransactionCreate', function (result) {
+                transactionID = result.last_inserted_id;
+                console.log(transactionID);
+            });
 
-            transactionID = 2;
+            //transactionID = 2;
 
         }
 
         var jsonToSaveToDB = [
             {
-                ProductID: null,
+                ProductIDs: null,
                 Quantity: null,
-                TotalPrice: null
+                SubTotalPrice: null,
+                Transaction_TransactionID: null
             }
         ];
 
@@ -360,7 +374,8 @@
                 {
                     ProductID: null,
                     Quantity: null,
-                    TotalPrice: null
+                    SubTotalPrice: null,
+                    Transaction_TransactionID: null
                 }
             ];
 
@@ -368,6 +383,7 @@
                 var newObj = {
                     ProductID: parseInt(element.itemID),
                     Quantity: parseInt(element.itemQuantity),
+                    SubTotalPrice: calculateSubTotal(element.itemQuantity, element.itemPrice),
                     Transaction_TransactionID: transactionID
                 };
                 jsonToSaveToDB.push(newObj);
@@ -376,18 +392,22 @@
             jsonToSaveToDB.shift();
             console.log(jsonToSaveToDB);
 
-            //if (jsonToSaveToDB.length > 0) {
-            //    $.ajax({
-            //        url: '/POS/POS/PurchaseProducts',
-            //        type: "POST",
-            //        data: { orders: jsonToSaveToDB },
-            //        success: function (result) {
-            //            console.log(result);
-            //        }
-            //    });
-            //}
+            if (jsonToSaveToDB.length > 0) {
+                $.ajax({
+                    url: '/POS/POS/PurchaseProducts',
+                    type: "POST",
+                    data: { orders: jsonToSaveToDB },
+                    success: function (result) {
+                        console.log(result);
+                        openModal("recieptModal");
+                    }
+                    //failed: {
+                    //    console.log(result);
+                    //}
+                });
+            }
 
-            openModal("recieptModal");
+            
 
             //console.log("Checkout now.");
         }

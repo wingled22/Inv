@@ -1,53 +1,48 @@
-﻿@model IEnumerable<Inv.Entities.Order>
+﻿@*@model IEnumerable<Inv.Entities.Order>*@
 
 @{
     ViewBag.Title = "Index";
 }
 <div class="container body-content">
-    <h2>Index</h2>
+    <h2>Orders</h2>
+    @*@Html.DevExpress().FormLayout(settings =>{
+
+        settings.Name = "SearchForm";
+        settings.Items.Add(item=>{
+            item.Caption = "From";
+            item.
+        });*@
 
     <p>
-        @Html.ActionLink("Create New", "Create")
+        Export Report from: <input type="date" name="fromDate" value="" /> &nbsp; To: <input type="date" name="toDate" value="" />
+        <input id="searchOrders" type="submit" value="GetReport" class="btn btn-primary" />
+        <input class="btn btn-primary togglehidden" name="exitsearch" type="submit" value="Exit Search" />
     </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Transaction.TransactionID)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.ProductName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Transaction.TransactionID)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.OrderID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.OrderID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.OrderID })
-                </td>
-            </tr>
-        }
+    @*@Html.Action("OrdersGridViewPartial")*@
+    @Html.Partial("_OrdersGridViewCallbackPartial")
+</div>
 
-    </table>
-    </div>
+<script>
+    //$('input[name=exitsearch]').click(function () {
+    //    $('input[name=exitsearch]').toggleClass('togglehidden');
+    //    searchProduct("");
+
+    //});
+
+    function getReport(fromDate , toDate) {
+        cbOrdersGridviewPartial.PerformCallback({ from: fromDate, to : toDate});
+
+    }
+
+
+    $(document).delegate("#searchOrders", "click", function (event) {
+        event.preventDefault();
+        getReport($('input[name=fromDate]').val(), $('input[name=toDate]').val());
+        //$('input[name=exitsearch]').removeClass('togglehidden');
+        console.log($('input[name=fromDate]').val() + " == "+$('input[name=toDate]').val());
+
+    });
+
+
+</script>

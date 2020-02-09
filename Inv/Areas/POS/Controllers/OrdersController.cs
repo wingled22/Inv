@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DevExpress.XtraPrinting.Native;
 using Inv.Entities;
 
 namespace Inv.Areas.POS.Controllers
@@ -122,6 +123,36 @@ namespace Inv.Areas.POS.Controllers
             db.Orders.Remove(order);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult OrdersGridViewPagingPartial(DateTime? from, DateTime? to)
+        {
+            ViewData["from"] = from;
+            ViewData["to"] = to;
+            return PartialView("_OrdersGridViewPagingPartial");
+        }
+
+        public ActionResult OrdersGridViewCallbackPartial(DateTime? from, DateTime? to)
+        {
+            ViewData["from"] = from;
+            ViewData["to"] = to;
+            return PartialView("_OrdersGridViewCallbackPartial");
+        }
+
+
+        public ActionResult OrdersGridViewPartial(DateTime? from, DateTime? to) {
+
+            if(from !=null && to != null) { 
+                var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= from || o.DateCreated <= to).OrderByDescending(o => o.DateCreated);
+                
+                ViewData["from"] = from;
+                ViewData["to"] = to;
+
+                return PartialView("_OrdersGridViewPartial",orders.ToList());
+            }
+            else {
+                return PartialView("_OrdersGridViewPartial", Enumerable.Empty<Order>());
+            }
         }
 
         protected override void Dispose(bool disposing)
