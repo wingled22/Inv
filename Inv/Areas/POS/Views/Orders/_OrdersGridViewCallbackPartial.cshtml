@@ -6,6 +6,7 @@
     {
         //@Html.RenderAction("DeliveryByMonthChart", "Dashboard", new { area = "Dashboard", year = ViewBag.Year, month = ViewBag.Month, day = ViewBag.Day });
 
-        Html.RenderAction("OrdersGridViewPagingPartial", "Orders", new { area = "POS" , from = ViewData["from"], to  = ViewData["to"]});
+        Html.RenderAction("OrdersGridViewPagingPartial", "Orders", new { area = "POS", from = ViewData["from"], to = ViewData["to"] });
+        //Html.RenderAction()
     });
 }).GetHtml()

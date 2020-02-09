@@ -127,9 +127,20 @@ namespace Inv.Areas.POS.Controllers
 
         public ActionResult OrdersGridViewPagingPartial(DateTime? from, DateTime? to)
         {
-            ViewData["from"] = from;
-            ViewData["to"] = to;
-            return PartialView("_OrdersGridViewPagingPartial");
+            if (from != null && to != null)
+            {
+                var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= from || o.DateCreated <= to).OrderByDescending(o => o.DateCreated);
+
+                ViewData["from"] = from;
+                ViewData["to"] = to;
+
+                return PartialView("_OrdersGridViewPagingPartial", orders.ToList());
+            }
+            else
+            {
+                return PartialView("_OrdersGridViewPagingPartial", Enumerable.Empty<Order>());
+            }
+            //return PartialView("_OrdersGridViewPagingPartial");
         }
 
         public ActionResult OrdersGridViewCallbackPartial(DateTime? from, DateTime? to)
