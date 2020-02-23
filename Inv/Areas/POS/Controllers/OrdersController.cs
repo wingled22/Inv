@@ -127,13 +127,14 @@ namespace Inv.Areas.POS.Controllers
 
         public ActionResult OrdersGridViewPagingPartial(DateTime? from, DateTime? to)
         {
+            ViewData["from"] = from;
+            ViewData["to"] = to;
+
             if (from != null && to != null)
             {
                 var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= from || o.DateCreated <= to).OrderByDescending(o => o.DateCreated);
 
-                ViewData["from"] = from;
-                ViewData["to"] = to;
-
+                
                 return PartialView("_OrdersGridViewPagingPartial", orders.ToList());
             }
             else
@@ -147,17 +148,32 @@ namespace Inv.Areas.POS.Controllers
         {
             ViewData["from"] = from;
             ViewData["to"] = to;
-            return PartialView("_OrdersGridViewCallbackPartial");
+            if (from != null && to != null)
+            {
+                var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= from || o.DateCreated <= to).OrderByDescending(o => o.DateCreated);
+
+               
+
+                return PartialView("_OrdersGridViewCallbackPartial", orders.ToList());
+            }
+            else
+            {
+                return PartialView("_OrdersGridViewCallbackPartial", Enumerable.Empty<Order>());
+            }
+
+            //return PartialView("_OrdersGridViewCallbackPartial");
         }
 
 
         public ActionResult OrdersGridViewPartial(DateTime? from, DateTime? to) {
 
-            if(from !=null && to != null) { 
+            ViewData["from"] = from;
+            ViewData["to"] = to;
+
+            if (from !=null && to != null) { 
                 var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= from || o.DateCreated <= to).OrderByDescending(o => o.DateCreated);
                 
-                ViewData["from"] = from;
-                ViewData["to"] = to;
+                
 
                 return PartialView("_OrdersGridViewPartial",orders.ToList());
             }

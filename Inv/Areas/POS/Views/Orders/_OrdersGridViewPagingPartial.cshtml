@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<Inv.Entities.Order>
+@using (Html.BeginForm())
+{
 
     @Html.Partial("_OrdersGridViewPartial", Model)
 
 
+}

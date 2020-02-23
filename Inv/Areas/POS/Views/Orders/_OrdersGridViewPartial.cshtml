@@ -1,6 +1,4 @@
 ﻿@model IEnumerable<Inv.Entities.Order>
-@using (Html.BeginForm())
-{
 
     @Html.DevExpress().GridView(settings => {
 
@@ -44,4 +42,4 @@
         settings.SettingsExport.FileName = "Sales_Report";
 
     }).Bind(Model).GetHtml()
-}
+
