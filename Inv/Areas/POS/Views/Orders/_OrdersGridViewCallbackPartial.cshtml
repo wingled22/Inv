@@ -1,7 +1,7 @@
 ﻿@Html.DevExpress().CallbackPanel(settings => {
     settings.Name = "cbOrdersGridviewPartial";
 
-    settings.CallbackRouteValues = new { Area = "POS", Controller = "Orders", Action = "OrdersGridViewCallbackPartial" };
+    settings.CallbackRouteValues = new { Area = "POS", Controller = "Orders", Action = "OrdersGridViewCallbackPartial", from = ViewData["from"], to = ViewData["to"] };
     settings.SetContent(() =>
     {
         //@Html.RenderAction("DeliveryByMonthChart", "Dashboard", new { area = "Dashboard", year = ViewBag.Year, month = ViewBag.Month, day = ViewBag.Day });

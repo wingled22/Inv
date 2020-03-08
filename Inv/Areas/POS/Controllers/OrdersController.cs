@@ -129,10 +129,14 @@ namespace Inv.Areas.POS.Controllers
         {
             ViewData["from"] = from;
             ViewData["to"] = to;
+            
 
             if (from != null && to != null)
             {
-                var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= from || o.DateCreated <= to).OrderByDescending(o => o.DateCreated);
+                var tempfrom = (DateTime)from;
+                var convto = (DateTime)to;
+                var tempto = convto.AddHours(23.99);
+                var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= tempfrom.Date).Where(o => o.DateCreated <= tempto).OrderByDescending(o => o.DateCreated);
 
                 
                 return PartialView("_OrdersGridViewPagingPartial", orders.ToList());
@@ -148,9 +152,13 @@ namespace Inv.Areas.POS.Controllers
         {
             ViewData["from"] = from;
             ViewData["to"] = to;
+            
             if (from != null && to != null)
             {
-                var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= from || o.DateCreated <= to).OrderByDescending(o => o.DateCreated);
+             var tempfrom = (DateTime)from;
+             var convto = (DateTime)to;
+             var tempto = convto.AddHours(23.99);
+             var orders = db.Orders.Include(o => o.Product).Include(o => o.Transaction).Where(o => o.DateCreated >= tempfrom.Date).Where(o => o.DateCreated <= tempto).OrderByDescending(o => o.DateCreated);
 
                
 

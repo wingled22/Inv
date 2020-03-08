@@ -1,6 +1,6 @@
 ﻿using DevExpress.Web.Mvc;
 using Inv.Entities;
-using Newtonsoft.Json.Linq;
+//using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,9 +58,9 @@ namespace Inv.Areas.POS.Controllers
         }
 
         //[HttpPost]
-        public JsonResult CheckoutProducts(List<JObject> json) {
-            return Json(new { result =  "success"}, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult CheckoutProducts(List<JObject> json) {
+        //    return Json(new { result =  "success"}, JsonRequestBehavior.AllowGet);
+        //}
 
         [HttpPost]
         public JsonResult PurchaseProducts(List<Order> orders) {
